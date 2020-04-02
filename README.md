@@ -94,7 +94,7 @@ Install Applications on Helm Chart
 
 # NGINX Ingress controller can be easily installed from official Helm chart stable/nginx-ingress repository.
  
-    $ helm repo update
+    
     $ helm show chart stable/nginx-ingress
     $ helm install nginx-ingress stable/nginx-ingress 
     
@@ -124,6 +124,11 @@ Set up Active Directory authentication for airflow (Optional)
 # Create a namespace
 
     kubectl config set-context dev1 --namespace=airflow
+ if the above command throws an error as: 
+ 
+    error: open /etc/rancher/k3s/k3s.yaml.lock: permission denied
+    
+ then execute kubectl command with sudo privilleges.
     
 ----------------------------------------------------------------------------------------------------------------------------------------
 

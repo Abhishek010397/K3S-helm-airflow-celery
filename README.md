@@ -62,3 +62,127 @@ Verify the status
      
       
 ----------------------------------------------------------------------------------------------------------------------------------------
+
+# Install helm3 on K3s cluster
+
+ Commands executed on master node
+ 
+     curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+----------------------------------------------------------------------------------------------------------------------------------------     
+ To confirm version of helm
+    
+    $ helm version
+     
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Add Helm Chart repository
+
+    $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+    $ helm search repo stable
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Install Applications on Helm Chart
+
+    $ kubectl config get-contexts
+    
+ for switching to desired context
+    
+    $ kubectl config use-context k3s
+    
+    $ helm repo update
+----------------------------------------------------------------------------------------------------------------------------------------
+
+# NGINX Ingress controller can be easily installed from official Helm chart stable/nginx-ingress repository.
+ 
+    $ helm repo update
+    $ helm show chart stable/nginx-ingress
+    $ helm install nginx-ingress stable/nginx-ingress 
+    
+ if this throws an ERROR:Kubernetes cluster unreachable
+   configure:-
+       
+       export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+ and then install
+       
+       $ helm install nginx-ingress stable/nginx-ingress 
+ to configure installation
+    
+       $ helm ls
+ ---------------------------------------------------------------------------------------------------------------------------------------
+ 
+ # Airflow on Kubernetes
+ 
+ 
+ We will make following changes to make our airflow installation useful in a n enterprise setting:
+
+Create a namespace
+Change the source of DAG files in the helm chart
+Set up Active Directory authentication for airflow (Optional)
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+# Create a namespace
+
+    kubectl config set-context dev1 --namespace=airflow
+    
+----------------------------------------------------------------------------------------------------------------------------------------
+
+# clone the charts repository:
+
+    git clone https://github.com/helm/charts.git
+    cd charts/stable/airflow
+    
+ Open values.yaml in a text editor and modify following sections:
+ 
+    dags:
+    ##
+    ## mount path for persistent volume.
+    ## Note that this location is referred to in airflow.cfg, so if you change it, you must update airflow.cfg accordingly.
+    path: /usr/local/airflow/dags
+    ##
+    ## Set to True to prevent pickling DAGs from scheduler to workers
+    doNotPickle: false
+    ##
+    ## Configure Git repository to fetch DAGs
+    git:
+    ##
+    ## url to clone the git repository
+    url: <your_own_git_url>
+    ##
+    ## branch name, tag or sha1 to reset to
+    ref: master
+    
+---------------------------------------------------------------------------------------------------------------------------------------
+  
+ # Active directory authentication - Create image
+        
+        mkdir docker-airflow
+        cd docker-airflow
+        vi Dockerfile
+        
+   create a docker file for an airflow image and then build it and push to your repository
+   
+         docker build . -t <dockerfile_name>
+         docker tag <img_id> hubusername:image_name
+         docker push hubusername/image_name
+         
+   then go back to the values.yaml file and under image section:
+         
+         image:
+         ##
+         ## docker-airflow image
+         repository: <your docker hub repository containing the airflow image>
+         ##
+         ## image tag
+         tag: latest
+         ##
+         ## Image pull policy
+         ## values: Always or IfNotPresent
+         pullPolicy: IfNotPresent
+         ##
+         ## image pull secret for private images
+         pullSecret:
+----------------------------------------------------------------------------------------------------------------------------------------
+       
+  
+

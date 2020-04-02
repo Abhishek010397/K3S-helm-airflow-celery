@@ -1,6 +1,6 @@
 # Duplicate this file and put your customization here
 ##NOTE
- # THERE ARE SOME CHANGES MADE IN THIS FILE SUCH AS THE URL(GIT_URL line 550) AND REPOSITORY IMAGE NAME(IF USING LOCAL DOCKER_REGISTRY PROVIDE THAT/USE DOCKERHUB IMAGE NAME FOR AIRFLOW line 68,566,580), ALSO IF NOT USING LOCALLY PROVIDE localhost:8080 if not provide ip addr of your instance (line 254)
+ # THERE ARE SOME CHANGES MADE IN THIS FILE SUCH AS THE URL(GIT_URL line 550) AND REPOSITORY IMAGE NAME(IF USING LOCAL DOCKER_REGISTRY PROVIDE THAT/USE DOCKERHUB IMAGE NAME FOR AIRFLOW line 68,566,580)
 ##
 ## common settings and setting for the webserver
 airflow:
@@ -251,7 +251,7 @@ web:
   ##
   ## Set AIRFLOW__WEBSERVER__BASE_URL
   ## Path should match Ingress configuration
-  baseUrl: "http://localhost:8080" (if not using locally provide AWS EC2 instance Master IP<public>)
+  baseUrl: "http://localhost:8080" 
   resources: {}
     # limits:
     #   cpu: "300m"

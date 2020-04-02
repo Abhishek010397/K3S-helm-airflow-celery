@@ -154,7 +154,7 @@ Set up Active Directory authentication for airflow (Optional)
     
 ---------------------------------------------------------------------------------------------------------------------------------------
   
- # Active directory authentication - Create image
+ #  Create airflow-image
         
         mkdir docker-airflow
         cd docker-airflow
@@ -184,5 +184,25 @@ Set up Active Directory authentication for airflow (Optional)
          pullSecret:
 ----------------------------------------------------------------------------------------------------------------------------------------
        
+  #   Installation
+     
+        helm install stable/airflow -f values.yaml --generate-name
+   
+   if this throws an an error:kubernetes cluster not found/unreachable,then configure export command in the same directory as:
+      
+       export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+       
+   and then procced with installation
+   
+   -------------------------------------------------------------------------------------------------------------------------------------
+ # Access the service
+       
+       kubectl get service
+   to view the port number:
+   
+       kubectl describe service<airflow-web-service>
+       
+  # Now use the port number to access it from browser
   
-
+       kubectl port-forward service/airflow-web 8080:8080
+  

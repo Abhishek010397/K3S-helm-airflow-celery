@@ -64,7 +64,7 @@ airflow:
   image:
     ##
     ## docker-airflow image
-    repository: 2307297/airflow
+    repository: puckle/docker-airflow  ( or provide local docker-registry image)
     ##
     ## image tag
     tag: latest
@@ -250,7 +250,7 @@ web:
   ##
   ## Set AIRFLOW__WEBSERVER__BASE_URL
   ## Path should match Ingress configuration
-  baseUrl: "http://localhost:8080"
+  baseUrl: "http://localhost:8080" (if not using locally provide AWS EC2 instance Master IP<public>)
   resources: {}
     # limits:
     #   cpu: "300m"
@@ -546,7 +546,7 @@ dags:
   git:
     ##
     ## url to clone the git repository
-    url: https://github.com/Abhishek010397/airflow-dags
+    url: https://github.com/prabhatsharma/airflow-dags
     ##
     ## branch name, tag or sha1 to reset to
     ref: master
@@ -562,9 +562,9 @@ dags:
       ## Image for the side car container
       image:
         ## docker-airflow image
-        repository: alpine/git
+        repository: (docker-registry image name for airflow)
         ## image tag
-        tag: 1.0.7
+        tag: latest
         ## Image pull policy
         ## values: Always or IfNotPresent
         pullPolicy: IfNotPresent
@@ -576,9 +576,9 @@ dags:
     ## Image for the init container (any image with git will do)
     image:
       ## docker-airflow image
-      repository: alpine/git
+      repository: (docker-registry image name for airflow)
       ## image tag
-      tag: 1.0.7
+      tag: latest
       ## Image pull policy
       ## values: Always or IfNotPresent
       pullPolicy: IfNotPresent

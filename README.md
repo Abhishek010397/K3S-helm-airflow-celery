@@ -129,7 +129,7 @@ Install Applications on Helm Chart
 
 Create a namespace
 Change the source of DAG files in the helm chart
-Set up Active Directory authentication for airflow (Optional)
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -149,7 +149,7 @@ Set up Active Directory authentication for airflow (Optional)
     git clone https://github.com/helm/charts.git
     cd charts/stable/airflow
     
- Open values.yaml in a text editor and modify following sections:
+ Open values.yaml in a text editor and modify following sections: *there are certain changes made in this yaml file,go through the note present at the top of that file*
  
     dags:
     ##

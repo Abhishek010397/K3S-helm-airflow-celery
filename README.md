@@ -75,7 +75,17 @@ Verify the status
      
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-Add Helm Chart repository
+#  Now run following commands to give permissions to tiller for performing operations
+
+   
+     $ kubectl -n kube-system create serviceaccount tiller
+     $ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+     
+ ---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+# Add Helm Chart repository
 
     $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
     $ helm search repo stable

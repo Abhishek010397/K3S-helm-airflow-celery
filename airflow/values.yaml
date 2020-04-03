@@ -602,7 +602,20 @@ rbac:
   ##
   ## Specifies whether RBAC resources should be created
   create: true
-
+  rules:
+    cluster:
+     - apiGroups:
+         - ""
+       resources:
+         - configmaps
+       verbs:
+         - get
+         - list
+         - watch
+         - patch
+         - update
+         - create
+         - delete
 ##
 ## Create or use ServiceAccount
 serviceAccount:

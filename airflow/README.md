@@ -1,28 +1,5 @@
 # Airflow / Celery
 
-[Airflow](https://airflow.apache.org/) is a platform to programmatically author, schedule and
-monitor workflows.
-
-
-## Install Chart
-
-To install the Airflow Chart into your Kubernetes cluster :
-
-```bash
-helm install --namespace "airflow" --name "airflow" stable/airflow
-```
-
-After installation succeeds, you can get a status of Chart
-
-```bash
-helm status "airflow"
-```
-
-If you want to delete your Chart, use this command:
-
-```bash
-helm delete  --purge "airflow"
-```
 
 ### Helm ingresses
 

@@ -241,4 +241,45 @@ Open values.yaml in a text editor and modify following sections: *there are cert
   # Now use the port number to access it from browser
   
        kubectl port-forward service/airflow-web 8080:8080
+       
+ ---------------------------------------------------------------------------------------------------------------------------------------
+ 
+ # Now for setting up DASK
+ 
+          helm repo add dask https://helm.dask.org/    # add the Dask Helm chart repository
+          helm repo update                             # get latest Helm charts
+          helm install dask/dask                     # deploy standard Dask chart
+ 
+   *Verify Deployment*
+        
+        
+             helm list
+             kubectl get pods
+             kubectl get services
+             
+       ou can use the addresses under EXTERNAL-IP to connect to your now-running Jupyter and Dask systems.
+
+Notice the name bald-eel. This is the name that Helm has given to your particular deployment of Dask. We could, for example, have multiple Dask-and-Jupyter clusters running at once, and each would be given a different name.
+
+
+  *Connect to Dask and Jupyter*/
+  
+When we ran kubectl get services, we saw some externally visible IPs:
+eg:-
+
+     mrocklin@pangeo-181919:~$ kubectl get services
+     NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                       AGE
+     bald-eel-jupyter     LoadBalancer   10.11.247.201   35.226.183.149   80:30173/TCP                  2m
+     bald-eel-scheduler   LoadBalancer   10.11.245.241   35.202.201.129   8786:31166/TCP,80:31626/TCP   2m
+     kubernetes           ClusterIP      10.11.240.1     <none>           443/TCP                       48m
+
+        
+  
+  
+We can navigate to these services from any web browser. Here, one is the Dask diagnostic dashboard, and the other is the Jupyter server. You can log into the Jupyter notebook server with the password, dask.
+
+We can create a notebook and create a Dask client from there. The DASK_SCHEDULER_ADDRESS environment variable has been populated with the address of the Dask scheduler. This is available in Python in the config dictionary.
+ 
+   For more Info
+   Refer:- https://docs.dask.org/en/latest/
   

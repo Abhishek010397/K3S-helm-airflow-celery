@@ -133,12 +133,9 @@ Change the source of DAG files in the helm chart
     
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-# clone the charts repository:
+# Edit the values.yaml file :
 
-    git clone https://github.com/helm/charts.git
-    cd charts/stable/airflow
-    
- Open values.yaml in a text editor and modify following sections: *there are certain changes made in this yaml file,go through the note present at the top of that file*
+Open values.yaml in a text editor and modify following sections: *there are certain changes made in this yaml file,go through the note present at the top of that file*
  
     dags:
     ##
@@ -158,10 +155,17 @@ Change the source of DAG files in the helm chart
     ## branch name, tag or sha1 to reset to
     ref: master
     
+ refer:-  
+          
+          git clone https://github.com/helm/charts.git
+          cd charts/stable/airflow
+                  
 ---------------------------------------------------------------------------------------------------------------------------------------
   
  #  Create airflow-image
         
+ Docker should be installed in the cluster:-https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+ 
         mkdir docker-airflow
         cd docker-airflow
         vi Dockerfile
@@ -194,8 +198,8 @@ Change the source of DAG files in the helm chart
    Edit the value.yaml file under the section rbac:
    
        rbac:
-  ##
-  ## Specifies whether RBAC resources should be created
+       ##
+       ## Specifies whether RBAC resources should be created
       
          create: true
          rules:

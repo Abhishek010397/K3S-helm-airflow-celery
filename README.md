@@ -27,15 +27,17 @@ Verify the status
 
     $ sudo systemctl status k3s
      
-To get the details of the nodes       
+Execute below commans only after k3s-agent is setup on workers
+
+ To get the details of the nodes       
          
     $ kubectl get nodes -o wide
   
-To get the details of all the services deployed         
+ To get the details of all the services deployed         
          
     $ kubectl get pods -A -o wide
   
-Each agent will require an access token to connect to the server, the token can be retrieved with the following commands        
+ Each agent will require an access token to connect to the server, the token can be retrieved with the following commands        
   
     $ sudo cat /var/lib/rancher/k3s/server/node-token
   

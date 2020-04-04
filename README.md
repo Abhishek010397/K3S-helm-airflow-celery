@@ -76,28 +76,17 @@ Verify the status
     $ helm version
      
 ----------------------------------------------------------------------------------------------------------------------------------------
-
-#  Now run following commands to give permissions to tiller for performing operations
-
-   
-     $ kubectl -n kube-system create serviceaccount tiller
-     $ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-     
- ---------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 # Add Helm Chart repository
 
     $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
     $ helm search repo stable
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-Install Applications on Helm Chart
+# Install Applications on Helm Chart
 
     $ kubectl config get-contexts
     
- for switching to desired context
+# for switching to desired context
     
     $ kubectl config use-context k3s
     
@@ -111,13 +100,13 @@ Install Applications on Helm Chart
     $ helm install nginx-ingress stable/nginx-ingress 
     
  if this throws an ERROR:Kubernetes cluster unreachable
-   configure:-
+   *configure:-
        
        export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
- and then install
+ *and then install
        
        $ helm install nginx-ingress stable/nginx-ingress 
- to configure installation
+ *to configure installation
     
        $ helm ls
  ---------------------------------------------------------------------------------------------------------------------------------------
@@ -180,7 +169,6 @@ Change the source of DAG files in the helm chart
    create a docker file for an airflow image and then build it and push to your repository
    
          docker build . -t <dockerfile_name>
-         docker tag <img_id> hubusername:image_name
          docker push hubusername/image_name
          
    then go back to the values.yaml file and under image section:
@@ -200,7 +188,34 @@ Change the source of DAG files in the helm chart
          ## image pull secret for private images
          pullSecret:
 ----------------------------------------------------------------------------------------------------------------------------------------
-       
+ # Provide RBAC permissions
+   *In Kubernetes, granting roles to a user or an application-specific service account is a best practice to ensure that your        application is operating in the scope that you have specified.
+   
+   Edit the value.yaml file under the section rbac:
+   
+       rbac:
+  ##
+  ## Specifies whether RBAC resources should be created
+      
+         create: true
+         rules:
+           cluster:
+            - apiGroups:
+                - ""
+              resources:
+                - configmaps
+              verbs:
+               - get
+               - list
+               - watch
+               - patch
+               - update
+               - create
+               - delete
+ 
+ For more info :- https://helm.sh/docs/topics/rbac/
+ 
+ ---------------------------------------------------------------------------------------------------------------------------------------
   #   Installation
      
         helm install stable/airflow -f values.yaml --generate-name

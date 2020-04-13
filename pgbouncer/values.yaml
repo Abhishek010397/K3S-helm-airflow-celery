@@ -1,0 +1,49 @@
+# Deployment values for pgbouncer
+replicaCount: 1
+internalPort: 5432
+antiAffinity: soft
+
+budget:
+  minAvailable: 0
+
+image:
+  repository: cradlepoint/pgbouncer
+  tag: latest
+  pullPolicy: Always
+
+databases: {}
+#  name:
+#    host: host
+#    port: port
+#    user: user
+#    dbname: dbname
+
+users: {}
+#  username: password
+
+connectionLimits:
+  maxClientConn: 200
+  defaultPoolSize: 200
+  minPoolSize: 15
+  reservePoolSize: 25
+  reservePoolTimeout: 5
+
+spec:
+    labels: {} # Add custom pod labels here
+
+labels: {}
+# Add custom deployment labels here
+
+logConnections: 0
+logDisconnections: 0
+logStats: 0
+logPoolerErrors: 1
+verbose: 0
+statsPeriod: 60
+
+# add key: value map entries to customSettings to be added to pbgouncer.ini [pgbouncer] section
+customSettings: {}
+
+global:
+  # optionally use namespace as dbname
+  namespacedDatabases: false

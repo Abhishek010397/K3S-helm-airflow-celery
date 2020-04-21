@@ -80,7 +80,8 @@ Verify the status
 ----------------------------------------------------------------------------------------------------------------------------------------
 # Add Helm Chart repository
 
-    $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+    $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/  (stable chart)
+    $ helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/  (incubator chart)
     $ helm search repo stable
 ----------------------------------------------------------------------------------------------------------------------------------------
 

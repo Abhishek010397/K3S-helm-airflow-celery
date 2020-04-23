@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "flaskapp.fullname" . }}
+  labels:
+    {{- include "flaskapp.labels" . | nindent 4 }}
+  annotations:
+    ingress.kubernetes.io/balance-algorithm: "roundrobin"
+    ingress.kubernetes.io/health-check-uri: "GET /test HTTP/1.1"
+    ingress.kubernetes.io/health-check-interval: "3s"
+    ingress.kubernetes.io/health-check-port: "9001"
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 9001
+      name: http
+  selector:
+    {{- include "flaskapp.selectorLabels" . | nindent 4 }}
